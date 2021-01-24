@@ -1,6 +1,6 @@
 # Lumen Authors API
 I did this project following a Udemy course called 
-[Lumen Microservices: Create Services and APIs with Lumen](https://www.udemy.com/courses/search/?lang=en&q=lumen+microservice&sort=relevance&src=sac).
+[Lumen Microservices: Create Services and APIs with Lumen](https://www.udemy.com/course/microservices-with-lumen-a-service-oriented-architecture/).
 
 I builded a complete set of PHP microservices and APIs and its security layers using Lumen and OAuth2
 
