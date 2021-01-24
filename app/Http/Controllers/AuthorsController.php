@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\Author;
 use App\Traits\ApiResponser;
+use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 
 class AuthorsController extends Controller
 {
@@ -27,22 +29,53 @@ class AuthorsController extends Controller
 
     public function store(Request $req)
     {
-        # code...
+        $rules = [
+            'name' => 'required|max:50',
+            'gender' => 'required|max:50|in:male,female',
+            'country' => 'required|max:50'
+        ];
+
+        $this->validate($req, $rules);
+
+        $author = Author::create($req->all());
+        return $this->successResponse($author, Response::HTTP_CREATED);
     }
 
-    public function show()
+    public function show($id)
     {
-        # code...
+
+        $author = Author::findOrFail($id);
+
+        return $this->successResponse($author);
     }
 
-    public function update(Request $req, $author)
+    public function update(Request $req, $id)
     {
-        # code...
+        $rules = [
+            'name' => 'required|max:50',
+            'gender' => 'required|max:50|in:male,female',
+            'country' => 'required|max:50'
+        ];
+
+        $this->validate($req, $rules);
+
+        $author = Author::findOrFail($id);
+
+        $author->fill($req->all());
+
+        if ($author->isClean()) {
+            return $this->errorResponse('At least one value must change', Response::HTTP_UNPROCESSABLE_ENTITY);
+        }
+        $author->save();
+        return $this->successResponse($author, Response::HTTP_CREATED);
     }
 
-    public function destroy($author)
+    public function destroy($id)
     {
-        # code...
+        $author = Author::findOrFail($id);
+
+        $author->delete();
+        return $this->successResponse($author);
     }
 
     //
